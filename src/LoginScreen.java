@@ -105,8 +105,11 @@ public class LoginScreen extends javax.swing.JFrame {
       
         
         islemler.kullaniciEkle(txtbAd.getText());
+        GamePanel.kullaniciAdi = txtbAd.getText();
         GamePanel panel = new GamePanel();
+     
         this.setVisible(false);
+      
         panel.setVisible(true);
       
     }//GEN-LAST:event_btnGirisActionPerformed
@@ -156,6 +159,6 @@ public class LoginScreen extends javax.swing.JFrame {
     private javax.swing.JButton btnGiris;
     private javax.swing.JButton btnSkor;
     private javax.swing.JLabel lblAd;
-    private javax.swing.JTextField txtbAd;
+    public javax.swing.JTextField txtbAd;
     // End of variables declaration//GEN-END:variables
 }

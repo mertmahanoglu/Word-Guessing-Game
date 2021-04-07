@@ -171,6 +171,36 @@ public class DatabaseOperation {
        
        }
        
+       
+       
+       
+        public void puanUpdate(String isim,int puan)
+    {
+   
+      String url = "jdbc:mysql://" + connection.host + ":" + connection.port + "/" + connection.databaseName+ "?useUnicode=true&characterEncoding=utf8";
+        try {
+            con=DriverManager.getConnection(url,connection.username,connection.password); 
+            System.out.println("Connected..");
+        } catch (SQLException e) {
+            System.out.println("Connection fail.."+e);
+        }
+        
+        
+         String sorgu = "Update kullanicilar set puan=? where ad ='"+isim+"'";
+        try {
+            preparedStatement = con.prepareStatement(sorgu);
+            
+            preparedStatement.setInt(1, puan);
+            
+               
+               preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+       
+       
+       
           public String cevapGetir(int id)
        {
            

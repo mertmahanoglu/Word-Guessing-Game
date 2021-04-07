@@ -1,6 +1,10 @@
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -17,24 +21,95 @@ import javax.swing.Timer;
  * @author Mert
  */
 public class GamePanel extends javax.swing.JFrame {
-    
+   LoginScreen screen = new LoginScreen();
+   
+   protected javax.swing.Timer refresherTimer = null;
+      protected javax.swing.Timer refresherTimer2 = null;
+      
+      
     static int toplamPuan=0;
     int puanDegeri = 0;
     int cevapClick = 0;
+    int degisimSayisi=1;
+    
+    
+    FileWriter myWriter;
+    HashSet<Integer> soruID = new HashSet<>();
+    Random r = new Random();
+    
+    static String kullaniciAdi;
+    
+    
     
     static void pause(){
     long Time0 = System.currentTimeMillis();
     long Time1;
     long runTime = 0;
-    while (runTime < 5000) { // 1000 milliseconds or 1 second
+    
+    Timer timer2;
+
+    while (runTime < 1000) { // 1000 milliseconds or 1 second
         Time1 = System.currentTimeMillis();
         runTime = Time1 - Time0;
     }
 }
+    public void idGenerator()
+    {
+      if (degisimSayisi<2) {
+            id = 1+r.nextInt(5);
+        
+        }
+        else if (degisimSayisi<4) {
+            id = 6+r.nextInt(5);
+         
+        }
+        else if (degisimSayisi<6) {
+            id = 11+r.nextInt(5);
+           
+        }
+        else if (degisimSayisi<8) {
+            id = 16+r.nextInt(5);
+         
+        }
+        else if (degisimSayisi<10) {
+            id = 21+r.nextInt(5);
+          
+        }
+        else if (degisimSayisi<12) {
+            id = 26+r.nextInt(5);
+         
+        }
+        else if (degisimSayisi<=14) {
+            id = 31+r.nextInt(5);
+             
+             
+        }
+    
+    }
+    
+    
+    
+    
+    
+    
     
     public void soruDegistir()
     {
-                 lblTimer2.setVisible(false);
+        System.out.println("ID : " + id);
+    
+        while(soruID.contains(id))
+        {
+            if (soruID.contains(id)==false) {
+                break;
+            }
+            else
+            {
+                 idGenerator();
+            }
+    
+        }
+        if (soruID.contains(id)==false) {
+             lblTimer2.setVisible(false);
                  lblTimer2.setText("20");
                  saniye2=20;
                  islemler.soruGetir(id, lblSoru);
@@ -49,8 +124,151 @@ public class GamePanel extends javax.swing.JFrame {
                  puan();
                  txtbCevap.setText("");
                  lblToplam.setText(String.valueOf("Puanınız : " + toplamPuan));
-               
+                 
+                 soruID.add(id);
+                
+        } 
     }
+    
+    
+    protected void stopRefreshing() {
+    if (refresherTimer != null) {
+        refresherTimer.stop();
+        refresherTimer = null;
+    }
+}
+protected void startRefreshing() {
+    stopRefreshing();
+    refresherTimer = new Timer(100, e -> {
+           
+                 if (lblCevap.getText().contains("-")==false) {
+
+                       if (degisimSayisi>=14) {
+                             
+                       try {
+                           
+                       screen.setVisible(false);
+                       toplamPuan += puanDegeri;
+                       txtbCevap.setEnabled(false);
+                       btnHarf.setEnabled(false);
+                       btnCvp.setEnabled(false);
+                       lblToplam.setText(String.valueOf(toplamPuan));
+                       islemler.puanUpdate(kullaniciAdi, toplamPuan);
+                       myWriter = new FileWriter("kullanicilar.txt",true);
+                        
+                       myWriter.write(kullaniciAdi + "        " + toplamPuan  + "\n");
+                       
+                       myWriter.close();
+                       stopRefreshing();
+                         
+                    } catch (IOException ex) {
+                        Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+ 
+                }
+                          else
+                          {
+                          pause();
+                           btnHarf.setEnabled(false);
+                           soruDegistir();
+                             btnHarf.setEnabled(true);
+                           degisimSayisi++;
+                          }
+                              
+           
+               
+               
+            
+        }
+    });
+    refresherTimer.start();
+}
+    
+    
+      protected void stopRefreshingSn() {
+    if (refresherTimer2 != null) {
+        refresherTimer2.stop();
+        refresherTimer2 = null;
+    }
+}
+protected void startRefreshingSn() {
+    stopRefreshingSn();
+    refresherTimer2 = new Timer(100, e -> {
+           
+                System.out.println(saniye);
+
+                       if (degisimSayisi>=14) {
+                             
+                       try {
+                           
+                       screen.setVisible(false);
+                       toplamPuan += puanDegeri;
+                       txtbCevap.setEnabled(false);
+                       btnHarf.setEnabled(false);
+                       btnCvp.setEnabled(false);
+                       lblToplam.setText(String.valueOf(toplamPuan));
+                       islemler.puanUpdate(kullaniciAdi, toplamPuan);
+                       myWriter = new FileWriter("kullanicilar.txt",true);
+                        
+                       myWriter.write(kullaniciAdi + "        " + toplamPuan  + "\n");
+                       
+                       myWriter.close();
+                       timer.stop();
+                       timer2.stop();
+                       stopRefreshingSn();
+                         
+                    } catch (IOException ex) {
+                        Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+ 
+                }
+                       else if(isOut){
+                                    
+                       try {
+                           
+                       screen.setVisible(false);
+                       
+                       txtbCevap.setEnabled(false);
+                       btnHarf.setEnabled(false);
+                       btnCvp.setEnabled(false);
+                       lblToplam.setText(String.valueOf(toplamPuan));
+                       islemler.puanUpdate(kullaniciAdi, toplamPuan);
+                       myWriter = new FileWriter("kullanicilar.txt",true);
+                        
+                       myWriter.write(kullaniciAdi + "        " + toplamPuan  + "\n");
+                       
+                       myWriter.close();
+                       timer.stop();
+                       lblTimer.setText("0:00");
+                       stopRefreshingSn();
+                         
+                    } catch (IOException ex) {
+                        Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                       }
+                          else
+                          {
+                           
+                           pause();
+                           btnHarf.setEnabled(false);
+                           soruDegistir();
+                             btnHarf.setEnabled(true);
+                           degisimSayisi++;
+                          }
+                              
+           
+               
+               
+            
+        
+    });
+    refresherTimer2.start();
+}
+    
+    
+    
+    
+    
     
     public void puan()
     {
@@ -70,15 +288,15 @@ public class GamePanel extends javax.swing.JFrame {
     }
     
     
-    
+       boolean isOut = false;
     Timer timer;
        Timer timer2;
     String hyphen;
     DatabaseOperation islemler = new DatabaseOperation();
-    int id = 1;
+    int id = 1+r.nextInt(5);
     int saniye = 0; 
      int saniye2 = 20; 
-    int dakika = 4;
+    int dakika = 1;
     
     
     public String hiddenWord(){
@@ -95,8 +313,10 @@ public class GamePanel extends javax.swing.JFrame {
         
         
         initComponents();
+     
         txtbCevap.setEnabled(false);
-         timer = new Timer(1000, new ActionListener() {
+        System.out.println("saaaaaaaaaaaaaaaaaa " + kullaniciAdi);
+         timer = new Timer(100, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 
@@ -109,6 +329,11 @@ public class GamePanel extends javax.swing.JFrame {
                     lblTimer.setText(dakika + " : 0" + saniye);
                     saniye--;
                 }
+                if (dakika==0 && saniye==0) {
+                    isOut=true;
+                    startRefreshingSn();
+                    
+                }
                  else
                 {
                 lblTimer.setText(dakika + " : " + saniye);
@@ -119,15 +344,11 @@ public class GamePanel extends javax.swing.JFrame {
         });
          
         timer.start();
-        
+      
+         
         soruDegistir();
-        
+               soruID.add(id);
         puan();
-    
-        
-       
-           
-
     }
 
     @SuppressWarnings("unchecked")
@@ -291,7 +512,6 @@ public class GamePanel extends javax.swing.JFrame {
 
         cevapClick++;
         lblTimer2.setVisible(true);
-        System.out.println(cevapClick);
         
       
         if (cevapClick%2==1) {
@@ -308,14 +528,21 @@ public class GamePanel extends javax.swing.JFrame {
                 saniye2--;
                 lblTimer2.setText(String.valueOf(saniye2));
              
-                if (saniye2==0) {
-                    id++;
+                
+                if (saniye2==0 && degisimSayisi>=14) {
+                    startRefreshingSn();
+                }
+                else if(saniye2==0)
+                {
+                  
                     cevapClick++;
+                    
                     soruDegistir();
                     txtbCevap.setEnabled(false);
                     timer.start();
                     timer2.stop();
                     saniye2=20;
+                     degisimSayisi++;
                 }
                 
                 
@@ -343,20 +570,38 @@ public class GamePanel extends javax.swing.JFrame {
         {
       
             if (txtbCevap.getText().equalsIgnoreCase(islemler.word.trim())) {
-                if (id>=14) {
+                if (degisimSayisi>=14) {
+                  
+                     
+                       
+                    try {
+                           screen.setVisible(false);
                      toplamPuan += puanDegeri;
                      txtbCevap.setEnabled(false);
                      btnHarf.setEnabled(false);
                      btnCvp.setEnabled(false);
+                       lblToplam.setText(String.valueOf(toplamPuan));
+                       islemler.puanUpdate(kullaniciAdi, toplamPuan);
+                       
+                       
+                         myWriter = new FileWriter("kullanicilar.txt",true);
+                        
+                        myWriter.write(kullaniciAdi + "        " + toplamPuan + " \n");
+                        myWriter.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                      JOptionPane.showMessageDialog(this, "Tebrikler! Puanınız : " + toplamPuan);
+                   
                 }
                 else
                 {
                     toplamPuan+=puanDegeri;
                     timer.start();
                     txtbCevap.setEnabled(false);
-                    id++;
+                    
                     soruDegistir();
+                     degisimSayisi++;
                 }
                        
             }
@@ -382,24 +627,7 @@ public class GamePanel extends javax.swing.JFrame {
 
     private void btnHarfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHarfActionPerformed
 
-            Timer timer2 = new Timer(1, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                 if (lblCevap.getText().contains("-")==false) {
-        
-           
-                btnHarf.setEnabled(false);
-                pause();
-                id++;
-                soruDegistir();
-            
-        }
-                
-            }
-        });
-            
-            timer2.start();
+             startRefreshing();
        
        
          islemler.hang(lblCevap,btnHarf);

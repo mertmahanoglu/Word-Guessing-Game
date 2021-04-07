@@ -1,0 +1,10 @@
+ffff        9800 
+hey        9800 
+sam        0
+d        0
+asd        0
+mertttttttttttt        3000
+cmd        0
+mb        400
+null        0
+amd        0
