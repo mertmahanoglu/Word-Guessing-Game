@@ -463,7 +463,7 @@ protected void startRefreshingSn() {
                         .addComponent(lblSoru, javax.swing.GroupLayout.DEFAULT_SIZE, 627, Short.MAX_VALUE))
                     .addComponent(lblPuan, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblToplam, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblToplam, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblCevap, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -538,13 +538,14 @@ protected void startRefreshingSn() {
                     lblTimer2.setText(String.valueOf(saniye2));
 
                     if (saniye2==0 && degisimSayisi>=14) {
+                         toplamPuan-=puanDegeri;
                         startRefreshingSn();
                     }
                     else if(saniye2==0)
                     {
-
+                        
                         cevapClick++;
-
+                        toplamPuan-=puanDegeri;
                         soruDegistir();
                         txtbCevap.setEnabled(false);
                         timer.start();
@@ -669,10 +670,10 @@ protected void startRefreshingSn() {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCvp;
-    private javax.swing.JButton btnHarf;
+    public javax.swing.JButton btnHarf;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel lblCevap;
+    public static javax.swing.JLabel lblCevap;
     private javax.swing.JLabel lblPuan;
     private javax.swing.JLabel lblSoru;
     private javax.swing.JLabel lblTimer;
