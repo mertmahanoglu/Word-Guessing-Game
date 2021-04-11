@@ -1,5 +1,9 @@
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -23,6 +27,15 @@ public class KullaniciTable extends javax.swing.JFrame {
 
     DatabaseOperation islemler = new DatabaseOperation();
     
+     
+    public void setBackGround()
+    {
+        getContentPane().setLayout(new BorderLayout());
+        JLabel background = new JLabel(new ImageIcon("C:\\Users\\Mert\\Documents\\NetBeansProjects\\KelimeOyunu\\src\\JAVA ARKA PLAN-2.jpg"));
+        getContentPane().add(background);
+        background.setLayout(new FlowLayout());
+    }
+    
        public void kullaniciGoruntule()
     {
         model.setRowCount(0);
@@ -44,7 +57,10 @@ public class KullaniciTable extends javax.swing.JFrame {
     public KullaniciTable() {
         initComponents();
         model = (DefaultTableModel)tblFatura.getModel();
+        tblFatura.setDefaultEditor(Object.class, null);
+        tblFatura.getTableHeader().setReorderingAllowed(false);
         kullaniciGoruntule();
+        setBackGround();
     }
 
     /**
@@ -78,7 +94,10 @@ public class KullaniciTable extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblFatura);
 
+        jButton1.setBackground(new java.awt.Color(255, 0, 51));
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/homepage.png"))); // NOI18N
         jButton1.setText("Giriş Ekranına Dön");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

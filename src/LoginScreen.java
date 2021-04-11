@@ -1,3 +1,10 @@
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,9 +22,18 @@ public class LoginScreen extends javax.swing.JFrame {
      */
     
     DatabaseOperation islemler = new DatabaseOperation();
+     
+    public void setBackGround()
+    {
+        getContentPane().setLayout(new BorderLayout());
+        JLabel background = new JLabel(new ImageIcon("C:\\Users\\Mert\\Documents\\NetBeansProjects\\KelimeOyunu\\src\\JAVA ARKA PLAN-2.jpg"));
+        getContentPane().add(background);
+        background.setLayout(new FlowLayout());
+    }
     
     public LoginScreen() {
         initComponents();
+        setBackGround();
     }
 
     /**
@@ -33,10 +49,13 @@ public class LoginScreen extends javax.swing.JFrame {
         txtbAd = new javax.swing.JTextField();
         btnGiris = new javax.swing.JButton();
         btnSkor = new javax.swing.JButton();
+        btnSoru = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         lblAd.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblAd.setForeground(new java.awt.Color(255, 255, 255));
         lblAd.setText("Adınız ve Soyadınız :");
 
         txtbAd.addActionListener(new java.awt.event.ActionListener() {
@@ -45,6 +64,9 @@ public class LoginScreen extends javax.swing.JFrame {
             }
         });
 
+        btnGiris.setBackground(new java.awt.Color(255, 0, 0));
+        btnGiris.setForeground(new java.awt.Color(255, 255, 255));
+        btnGiris.setIcon(new javax.swing.ImageIcon(getClass().getResource("/log-in.png"))); // NOI18N
         btnGiris.setText("Giriş");
         btnGiris.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -52,10 +74,23 @@ public class LoginScreen extends javax.swing.JFrame {
             }
         });
 
+        btnSkor.setBackground(new java.awt.Color(255, 0, 0));
+        btnSkor.setForeground(new java.awt.Color(255, 255, 255));
+        btnSkor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/winner.png"))); // NOI18N
         btnSkor.setText("Skor Tablosu");
         btnSkor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSkorActionPerformed(evt);
+            }
+        });
+
+        btnSoru.setBackground(new java.awt.Color(255, 0, 0));
+        btnSoru.setForeground(new java.awt.Color(255, 255, 255));
+        btnSoru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/add.png"))); // NOI18N
+        btnSoru.setText("Soru Ekle");
+        btnSoru.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSoruActionPerformed(evt);
             }
         });
 
@@ -64,47 +99,55 @@ public class LoginScreen extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 106, Short.MAX_VALUE)
-                .addComponent(txtbAd, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(90, 90, 90))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(214, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblAd)
-                        .addGap(147, 147, 147))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnGiris, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(141, 141, 141))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnSkor, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(141, 141, 141))))
+                    .addComponent(txtbAd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(lblAd)
+                            .addGap(57, 57, 57))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(btnGiris, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(51, 51, 51))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(btnSkor, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                                .addComponent(btnSoru, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGap(51, 51, 51))))
+                .addGap(231, 231, 231))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(118, 118, 118)
+                .addContainerGap(95, Short.MAX_VALUE)
                 .addComponent(lblAd)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtbAd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnGiris, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSkor, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(btnGiris, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnSkor, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnSoru, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(71, 71, 71))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtbAdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtbAdActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_txtbAdActionPerformed
 
     private void btnGirisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGirisActionPerformed
-      
+
         
-        islemler.kullaniciEkle(txtbAd.getText());
+        if (txtbAd.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Ad ve soyad alanı boş bırakılamaz");
+        }
+        else
+        {
+           islemler.kullaniciEkle(txtbAd.getText());
         GamePanel.kullaniciAdi = txtbAd.getText();
         GamePanel panel = new GamePanel();
      
@@ -112,6 +155,9 @@ public class LoginScreen extends javax.swing.JFrame {
       
         panel.setVisible(true);
       
+        }
+        
+     
     }//GEN-LAST:event_btnGirisActionPerformed
 
     private void btnSkorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSkorActionPerformed
@@ -119,6 +165,13 @@ public class LoginScreen extends javax.swing.JFrame {
         this.setVisible(false);
         frame.setVisible(true);
     }//GEN-LAST:event_btnSkorActionPerformed
+
+    private void btnSoruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSoruActionPerformed
+           
+       SoruEkleme soruekleme = new SoruEkleme();
+       soruekleme.setVisible(true);
+          this.setVisible(false);
+    }//GEN-LAST:event_btnSoruActionPerformed
 
     /**
      * @param args the command line arguments
@@ -158,6 +211,7 @@ public class LoginScreen extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGiris;
     private javax.swing.JButton btnSkor;
+    private javax.swing.JButton btnSoru;
     private javax.swing.JLabel lblAd;
     public javax.swing.JTextField txtbAd;
     // End of variables declaration//GEN-END:variables

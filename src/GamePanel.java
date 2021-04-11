@@ -1,12 +1,19 @@
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
@@ -26,6 +33,8 @@ public class GamePanel extends javax.swing.JFrame {
    protected javax.swing.Timer refresherTimer = null;
       protected javax.swing.Timer refresherTimer2 = null;
       
+       SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+       Date date = new Date(System.currentTimeMillis());
       
     static int toplamPuan=0;
     int puanDegeri = 0;
@@ -154,11 +163,14 @@ protected void startRefreshing() {
                        btnCvp.setEnabled(false);
                        lblToplam.setText(String.valueOf(toplamPuan));
                        islemler.puanUpdate(kullaniciAdi, toplamPuan);
+                        timer.stop();
                        myWriter = new FileWriter("kullanicilar.txt",true);
                         
-                       myWriter.write(kullaniciAdi + "        " + toplamPuan  + "\n");
+                       myWriter.write(kullaniciAdi + "    " + toplamPuan + "    "+ lblTimer.getText() + "    "  + formatter.format(date) + "\n");
                        
                        myWriter.close();
+                 JOptionPane.showMessageDialog(this, "Tebrikler " + kullaniciAdi + "\n" + "Puanınız : " + toplamPuan + "\n" + "Kalan zamanınız : " + lblTimer.getText() + "\n" +"Tarih : " + formatter.format(date));
+
                        stopRefreshing();
                          
                     } catch (IOException ex) {
@@ -202,7 +214,7 @@ protected void startRefreshingSn() {
                        try {
                            
                        screen.setVisible(false);
-                       toplamPuan += puanDegeri;
+                       
                        txtbCevap.setEnabled(false);
                        btnHarf.setEnabled(false);
                        btnCvp.setEnabled(false);
@@ -210,11 +222,13 @@ protected void startRefreshingSn() {
                        islemler.puanUpdate(kullaniciAdi, toplamPuan);
                        myWriter = new FileWriter("kullanicilar.txt",true);
                         
-                       myWriter.write(kullaniciAdi + "        " + toplamPuan  + "\n");
+                       myWriter.write(kullaniciAdi + "    " + toplamPuan + "    "+ lblTimer.getText() + "    "  + formatter.format(date) + "\n");
                        
                        myWriter.close();
                        timer.stop();
                        timer2.stop();
+                 JOptionPane.showMessageDialog(this, "Tebrikler " + kullaniciAdi + "\n" + "Puanınız : " + toplamPuan + "\n" + "Kalan zamanınız : " + lblTimer.getText() + "\n" +"Tarih : " + formatter.format(date));
+
                        stopRefreshingSn();
                          
                     } catch (IOException ex) {
@@ -226,6 +240,8 @@ protected void startRefreshingSn() {
                                     
                        try {
                            
+                          
+                           
                        screen.setVisible(false);
                        
                        txtbCevap.setEnabled(false);
@@ -235,11 +251,13 @@ protected void startRefreshingSn() {
                        islemler.puanUpdate(kullaniciAdi, toplamPuan);
                        myWriter = new FileWriter("kullanicilar.txt",true);
                         
-                       myWriter.write(kullaniciAdi + "        " + toplamPuan  + "\n");
+                       myWriter.write(kullaniciAdi + "    " + toplamPuan + "    "+ lblTimer.getText() + "    "  + formatter.format(date) + "\n");
                        
                        myWriter.close();
                        timer.stop();
+                      
                        lblTimer.setText("0:00");
+                 JOptionPane.showMessageDialog(this, "Tebrikler " + kullaniciAdi + "\n" + "Puanınız : " + toplamPuan + "\n" + "Kalan zamanınız : " + lblTimer.getText() + "\n" +"Tarih : " + formatter.format(date));
                        stopRefreshingSn();
                          
                     } catch (IOException ex) {
@@ -296,7 +314,7 @@ protected void startRefreshingSn() {
     int id = 1+r.nextInt(5);
     int saniye = 0; 
      int saniye2 = 20; 
-    int dakika = 1;
+    int dakika = 4;
     
     
     public String hiddenWord(){
@@ -307,16 +325,24 @@ protected void startRefreshingSn() {
                 }
     
     
+    public void setBackGround()
+    {
+        getContentPane().setLayout(new BorderLayout());
+        JLabel background = new JLabel(new ImageIcon("C:\\Users\\Mert\\Documents\\NetBeansProjects\\KelimeOyunu\\src\\JAVA ARKA PLAN-2.jpg"));
+        getContentPane().add(background);
+        background.setLayout(new FlowLayout());
+    }
     
     
     public GamePanel() {
         
         
         initComponents();
-     
+        setBackGround();
+        
         txtbCevap.setEnabled(false);
-        System.out.println("saaaaaaaaaaaaaaaaaa " + kullaniciAdi);
-         timer = new Timer(100, new ActionListener() {
+     
+         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 
@@ -355,8 +381,6 @@ protected void startRefreshingSn() {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        btnEkle = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         lblPuan = new javax.swing.JLabel();
         lblSoru = new javax.swing.JLabel();
@@ -372,29 +396,26 @@ protected void startRefreshingSn() {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("Soru Eklemek İster Misiniz?");
-
-        btnEkle.setText("Soru Ekle");
-        btnEkle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEkleActionPerformed(evt);
-            }
-        });
-
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Soru : ");
 
         lblPuan.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lblPuan.setForeground(new java.awt.Color(255, 255, 255));
         lblPuan.setText("Puan Değeri :");
 
         lblSoru.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblSoru.setForeground(new java.awt.Color(255, 255, 255));
         lblSoru.setText("Sorunun Tamamı");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Cevabınız :");
 
+        btnCvp.setBackground(new java.awt.Color(255, 0, 51));
         btnCvp.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnCvp.setForeground(new java.awt.Color(255, 255, 255));
+        btnCvp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/idea.png"))); // NOI18N
         btnCvp.setText("Cevapla");
         btnCvp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -403,9 +424,13 @@ protected void startRefreshingSn() {
         });
 
         lblCevap.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        lblCevap.setForeground(new java.awt.Color(255, 255, 255));
         lblCevap.setText("cevap");
 
+        btnHarf.setBackground(new java.awt.Color(255, 0, 51));
         btnHarf.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnHarf.setForeground(new java.awt.Color(255, 255, 255));
+        btnHarf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/technology.png"))); // NOI18N
         btnHarf.setText("Harf Al");
         btnHarf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -414,12 +439,15 @@ protected void startRefreshingSn() {
         });
 
         lblTimer.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lblTimer.setForeground(new java.awt.Color(255, 255, 255));
         lblTimer.setText("lblTimer");
 
         lblToplam.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lblToplam.setForeground(new java.awt.Color(255, 255, 255));
         lblToplam.setText("Puanınız : ");
 
         lblTimer2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lblTimer2.setForeground(new java.awt.Color(255, 255, 255));
         lblTimer2.setText("20");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -427,74 +455,64 @@ protected void startRefreshingSn() {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addGap(58, 58, 58)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblPuan)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblSoru)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(lblToplam))
+                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(lblSoru, javax.swing.GroupLayout.DEFAULT_SIZE, 627, Short.MAX_VALUE))
+                    .addComponent(lblPuan, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblToplam, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblCevap, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnCvp, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40)
+                                .addGap(18, 18, 18)
                                 .addComponent(btnHarf, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtbCevap, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblTimer))
-                        .addGap(18, 18, 18)
-                        .addComponent(lblTimer2)
-                        .addContainerGap(257, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnEkle, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(62, 62, 62))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(244, 244, 244)
-                .addComponent(lblCevap)
-                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblTimer)
+                                    .addComponent(txtbCevap, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblTimer2)))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEkle, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(137, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(lblSoru))
                 .addGap(18, 18, 18)
                 .addComponent(lblPuan)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblCevap)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblToplam)
-                    .addComponent(lblTimer))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtbCevap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTimer2))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCvp, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnHarf, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(83, 83, 83)
+                        .addComponent(lblToplam))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addComponent(lblCevap)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblTimer)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(txtbCevap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnCvp, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnHarf, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(lblTimer2)))
+                .addGap(121, 121, 121))
         );
 
         lblCevap.getAccessibleContext().setAccessibleDescription("");
@@ -502,138 +520,112 @@ protected void startRefreshingSn() {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnEkleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEkleActionPerformed
-       this.setVisible(false);
-       SoruEkleme soruekleme = new SoruEkleme();
-       soruekleme.setVisible(true);
-    }//GEN-LAST:event_btnEkleActionPerformed
-
     private void btnCvpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCvpActionPerformed
 
         cevapClick++;
         lblTimer2.setVisible(true);
-        
-      
+
         if (cevapClick%2==1) {
-                    timer.stop();
-       
-      
-        txtbCevap.setEnabled(true);
-        btnHarf.setEnabled(false);
-        timer2 = new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-              
-               
-                saniye2--;
-                lblTimer2.setText(String.valueOf(saniye2));
-             
-                
-                if (saniye2==0 && degisimSayisi>=14) {
-                    startRefreshingSn();
+            timer.stop();
+
+            txtbCevap.setEnabled(true);
+            btnHarf.setEnabled(false);
+            timer2 = new Timer(1000, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    saniye2--;
+                    lblTimer2.setText(String.valueOf(saniye2));
+
+                    if (saniye2==0 && degisimSayisi>=14) {
+                        startRefreshingSn();
+                    }
+                    else if(saniye2==0)
+                    {
+
+                        cevapClick++;
+
+                        soruDegistir();
+                        txtbCevap.setEnabled(false);
+                        timer.start();
+                        timer2.stop();
+                        saniye2=20;
+                        degisimSayisi++;
+                    }
+
                 }
-                else if(saniye2==0)
-                {
-                  
-                    cevapClick++;
-                    
-                    soruDegistir();
-                    txtbCevap.setEnabled(false);
-                    timer.start();
-                    timer2.stop();
-                    saniye2=20;
-                     degisimSayisi++;
-                }
-                
-                
-            }
-        });
-         
-         timer2.start();
-     
+            });
+
+            timer2.start();
+
         }
-        
-        
-        
+
         else
         {
             timer2.stop();
-           
-            
-        if (txtbCevap.isEnabled() && txtbCevap.getText().equals("")  ) {
-            cevapClick++;
-            timer2.start();
-            JOptionPane.showMessageDialog(this, "BOŞ BIRAKILAMAZ");
-        }
-        
-        else
-        {
-      
-            if (txtbCevap.getText().equalsIgnoreCase(islemler.word.trim())) {
-                if (degisimSayisi>=14) {
-                  
-                     
-                       
-                    try {
-                           screen.setVisible(false);
-                     toplamPuan += puanDegeri;
-                     txtbCevap.setEnabled(false);
-                     btnHarf.setEnabled(false);
-                     btnCvp.setEnabled(false);
-                       lblToplam.setText(String.valueOf(toplamPuan));
-                       islemler.puanUpdate(kullaniciAdi, toplamPuan);
-                       
-                       
-                         myWriter = new FileWriter("kullanicilar.txt",true);
-                        
-                        myWriter.write(kullaniciAdi + "        " + toplamPuan + " \n");
-                        myWriter.close();
-                    } catch (IOException ex) {
-                        Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
+
+            if (txtbCevap.isEnabled() && txtbCevap.getText().equals("")  ) {
+                cevapClick++;
+                timer2.start();
+                JOptionPane.showMessageDialog(this, "BOŞ BIRAKILAMAZ");
+            }
+
+            else
+            {
+
+                if (txtbCevap.getText().equalsIgnoreCase(islemler.word.trim())) {
+                    if (degisimSayisi>=14) {
+
+                        try {
+                            screen.setVisible(false);
+                            toplamPuan += puanDegeri;
+                            txtbCevap.setEnabled(false);
+                            btnHarf.setEnabled(false);
+                            btnCvp.setEnabled(false);
+                            lblToplam.setText(String.valueOf(toplamPuan));
+                            islemler.puanUpdate(kullaniciAdi, toplamPuan);
+
+                            myWriter = new FileWriter("kullanicilar.txt",true);
+
+                            myWriter.write(kullaniciAdi + "    " + toplamPuan + "    "+ lblTimer.getText() + "    "  + formatter.format(date) + "\n");
+                            myWriter.close();
+                        } catch (IOException ex) {
+                            Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        JOptionPane.showMessageDialog(this, "Tebrikler " + kullaniciAdi + "\n" + "Puanınız : " + toplamPuan + "\n" + "Kalan zamanınız : " + lblTimer.getText() + "\n" +"Tarih : " + formatter.format(date));
+
                     }
-                     JOptionPane.showMessageDialog(this, "Tebrikler! Puanınız : " + toplamPuan);
-                   
+                    else
+                    {
+                        toplamPuan+=puanDegeri;
+                        timer.start();
+                        txtbCevap.setEnabled(false);
+
+                        soruDegistir();
+                        degisimSayisi++;
+                    }
+
                 }
                 else
                 {
-                    toplamPuan+=puanDegeri;
-                    timer.start();
-                    txtbCevap.setEnabled(false);
-                    
-                    soruDegistir();
-                     degisimSayisi++;
+                    cevapClick++;
+                    timer2.start();
+                    JOptionPane.showMessageDialog(this, "Bilemediniz");
                 }
-                       
-            }
-            else
-            {
-            cevapClick++;
-            timer2.start();
-            JOptionPane.showMessageDialog(this, "Bilemediniz");
-            }
-            
-          
-        }
-       
-        
-        }
-        
 
-    
-    
-     
+            }
+
+        }
 
     }//GEN-LAST:event_btnCvpActionPerformed
 
     private void btnHarfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHarfActionPerformed
 
-             startRefreshing();
-       
-       
-         islemler.hang(lblCevap,btnHarf);
-         puan();
-       
-       
+        startRefreshing();
+
+        islemler.hang(lblCevap,btnHarf);
+        puan();
+
     }//GEN-LAST:event_btnHarfActionPerformed
 
     /**
@@ -677,12 +669,10 @@ protected void startRefreshingSn() {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCvp;
-    private javax.swing.JButton btnEkle;
-    public javax.swing.JButton btnHarf;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnHarf;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    public static javax.swing.JLabel lblCevap;
+    private javax.swing.JLabel lblCevap;
     private javax.swing.JLabel lblPuan;
     private javax.swing.JLabel lblSoru;
     private javax.swing.JLabel lblTimer;
