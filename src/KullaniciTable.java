@@ -1,9 +1,12 @@
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -55,10 +58,29 @@ public class KullaniciTable extends javax.swing.JFrame {
     
     
     public KullaniciTable() {
+        
         initComponents();
-        model = (DefaultTableModel)tblFatura.getModel();
+        
+          model = (DefaultTableModel)tblFatura.getModel();
+
+        
+         tblFatura.getTableHeader().setOpaque(false);
+         DefaultTableCellRenderer MyHeaderRender = new DefaultTableCellRenderer();
+         MyHeaderRender.setBackground(new Color(32,136,203));
+         MyHeaderRender.setForeground(new Color(255,255,255));
+
+        tblFatura.getTableHeader().getColumnModel().getColumn(0).setHeaderRenderer(MyHeaderRender);
+        tblFatura.getTableHeader().getColumnModel().getColumn(1).setHeaderRenderer(MyHeaderRender);
+        tblFatura.getTableHeader().getColumnModel().getColumn(2).setHeaderRenderer(MyHeaderRender); 
+        
+        tblFatura.setRowHeight(25);
         tblFatura.setDefaultEditor(Object.class, null);
         tblFatura.getTableHeader().setReorderingAllowed(false);
+
+
+     
+     
+       
         kullaniciGoruntule();
         setBackGround();
     }
@@ -77,8 +99,11 @@ public class KullaniciTable extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
-        tblFatura.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        tblFatura.setBackground(new java.awt.Color(255, 0, 51));
+        tblFatura.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        tblFatura.setForeground(new java.awt.Color(255, 255, 255));
         tblFatura.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
